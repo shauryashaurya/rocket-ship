@@ -103,13 +103,22 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("ri.ins.dim.customer"),
-    src=Input("ri.ins.src.customer_snapshot"),
-    out=Output("ri.ins.dim.customer_type0")
+    prev_dim=Input("ri.ins.dim.customer"),          # Existing customer dimension
+    src=Input("ri.ins.src.customer_snapshot"),      # Latest customer snapshot
+    out=Output("ri.ins.dim.customer_type0")         # Output dimension (SCD Type 0)
 )
 def compute(prev_dim, src, out):
-    # Only insert new customers; ignore changes to existing
-    new_keys = src.join(prev_dim.select("customer_id"), "customer_id", "left_anti")
+
+    # Identify customers that are new in the source snapshot
+    # SCD Type 0: existing customer records are never updated
+    new_keys = src.join(
+        prev_dim.select("customer_id"),
+        on="customer_id",
+        how="left_anti"
+    )
+
+    # Append new customers to the existing dimension
+    # All previously stored records remain unchanged
     out.write(prev_dim.unionByName(new_keys))
 ```
 
@@ -120,12 +129,22 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("scm.dim.product"),
-    src=Input("scm.src.product_snapshot"),
-    out=Output("scm.dim.product_type0")
+    prev_dim=Input("scm.dim.product"),          # Existing product dimension
+    src=Input("scm.src.product_snapshot"),      # Latest full snapshot of product data
+    out=Output("scm.dim.product_type0")         # Output dimension (SCD Type 0)
 )
 def compute(prev_dim, src, out):
-    new = src.join(prev_dim.select("product_id"), "product_id", "left_anti")
+
+    # Identify products that are new in the source snapshot
+    # SCD Type 0: existing records are never updated
+    new = src.join(
+        prev_dim.select("product_id"),
+        on="product_id",
+        how="left_anti"
+    )
+
+    # Append new products to the existing dimension
+    # Previously stored records remain unchanged
     out.write(prev_dim.unionByName(new))
 ```
 
@@ -155,13 +174,25 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("ri.ins.dim.policyholder"),
-    src=Input("ri.ins.src.policyholder_delta"),
-    out=Output("ri.ins.dim.policyholder_type1")
+    prev_dim=Input("ri.ins.dim.policyholder"),          # Existing policyholder dimension
+    src=Input("ri.ins.src.policyholder_delta"),         # Delta feed with updated contact details
+    out=Output("ri.ins.dim.policyholder_type1")         # Output dimension (SCD Type 1)
 )
 def compute(prev_dim, src, out):
+
+    # Select the latest contact attributes that need to be updated
     updates = src.select("policyholder_id", "email", "phone")
-    unchanged = prev_dim.join(updates.select("policyholder_id"), "policyholder_id", "left_anti")
+
+    # Identify records in the dimension that are NOT part of the update set
+    # These records remain unchanged
+    unchanged = prev_dim.join(
+        updates.select("policyholder_id"),
+        on="policyholder_id",
+        how="left_anti"
+    )
+
+    # Combine unchanged records with updated records
+    # Updated values overwrite existing ones (no history retained)
     out.write(unchanged.unionByName(updates))
 ```
 
@@ -172,13 +203,25 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("scm.dim.warehouse"),
-    src=Input("scm.src.warehouse_delta"),
-    out=Output("scm.dim.warehouse_type1")
+    prev_dim=Input("scm.dim.warehouse"),          # Existing warehouse dimension
+    src=Input("scm.src.warehouse_delta"),         # Delta feed with updated contact details
+    out=Output("scm.dim.warehouse_type1")         # Output dimension (SCD Type 1)
 )
 def compute(prev_dim, src, out):
+
+    # Select the latest contact attributes for each warehouse
     upd = src.select("warehouse_id", "contact_email", "contact_phone")
-    base = prev_dim.join(upd.select("warehouse_id"), "warehouse_id", "left_anti")
+
+    # Identify warehouse records that are not present in the update feed
+    # These records will remain unchanged
+    base = prev_dim.join(
+        upd.select("warehouse_id"),
+        on="warehouse_id",
+        how="left_anti"
+    )
+
+    # Merge unchanged records with updated records
+    # Updated contact details overwrite existing values (no history retained)
     out.write(base.unionByName(upd))
 ```
 
@@ -220,27 +263,60 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("ri.ins.dim.policy_address_scd2"),
-    src=Input("ri.ins.src.policy_snapshot"),
-    out=Output("ri.ins.dim.policy_address_scd2_out")
+    prev_dim=Input("ri.ins.dim.policy_address_scd2"),       # Existing policy address SCD2 table
+    src=Input("ri.ins.src.policy_snapshot"),                # Latest policy snapshot
+    out=Output("ri.ins.dim.policy_address_scd2_out")        # Updated SCD2 output
 )
 def compute(prev_dim, src, out):
-    today = F.current_date()
+
+    today = F.current_date()                                # Processing date
+
+    # Separate current active records and source snapshot
     cur = prev_dim.filter("is_current = 1").alias("d")
     s = src.alias("s")
+
+    # Join current records with source to compare attributes
     j = cur.join(s, "policy_id")
-    changed = j.filter(F.col("d.address") != F.col("s.address")).select(
-        "policy_id", F.col("s.address").alias("address")
+
+    # Identify policies where the address has changed
+    changed = j.filter(
+        F.col("d.address") != F.col("s.address")
+    ).select(
+        "policy_id",
+        F.col("s.address").alias("address")
     )
-    closed = cur.join(changed.select("policy_id"), "policy_id") \
-        .withColumn("effective_end", today - F.expr("INTERVAL 1 DAY")) \
-        .withColumn("is_current", F.lit(0))
-    new_rows = changed.withColumn("effective_start", today) \
-        .withColumn("effective_end", F.lit(None).cast("date")) \
-        .withColumn("is_current", F.lit(1))
-    unchanged = cur.join(changed.select("policy_id"), "policy_id", "left_anti")
+
+    # Close existing records for policies with changed addresses
+    closed = (
+        cur.join(changed.select("policy_id"), "policy_id")
+           .withColumn("effective_end", today - F.expr("INTERVAL 1 DAY"))
+           .withColumn("is_current", F.lit(0))
+    )
+
+    # Create new active records with updated address values
+    new_rows = (
+        changed.withColumn("effective_start", today)
+               .withColumn("effective_end", F.lit(None).cast("date"))
+               .withColumn("is_current", F.lit(1))
+    )
+
+    # Retain current records where no address change occurred
+    unchanged = cur.join(
+        changed.select("policy_id"),
+        on="policy_id",
+        how="left_anti"
+    )
+
+    # Keep historical records that were already closed
     hist = prev_dim.filter("is_current = 0")
-    out.write(hist.unionByName(closed).unionByName(unchanged).unionByName(new_rows))
+
+    # Combine historical, closed, unchanged, and new active records
+    out.write(
+        hist
+        .unionByName(closed)
+        .unionByName(unchanged)
+        .unionByName(new_rows)
+    )
 ```
 
 ### Supply-chain example (supplier rating history)
@@ -250,27 +326,60 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("scm.dim.supplier_scd2"),
-    src=Input("scm.src.supplier_snapshot"),
-    out=Output("scm.dim.supplier_scd2_out")
+    prev_dim=Input("scm.dim.supplier_scd2"),          # Existing supplier SCD2 dimension
+    src=Input("scm.src.supplier_snapshot"),           # Latest supplier snapshot
+    out=Output("scm.dim.supplier_scd2_out")           # Updated SCD2 output
 )
 def compute(prev_dim, src, out):
-    today = F.current_date()
+
+    today = F.current_date()                           # Processing date
+
+    # Separate current active supplier records and source snapshot
     cur = prev_dim.filter("is_current = 1").alias("d")
     s = src.alias("s")
+
+    # Join current dimension with source to compare ratings
     j = cur.join(s, "supplier_id")
-    changed = j.filter(F.col("d.rating") != F.col("s.rating")).select(
-        "supplier_id", F.col("s.rating").alias("rating")
+
+    # Identify suppliers whose rating has changed
+    changed = j.filter(
+        F.col("d.rating") != F.col("s.rating")
+    ).select(
+        "supplier_id",
+        F.col("s.rating").alias("rating")
     )
-    closed = cur.join(changed.select("supplier_id"), "supplier_id") \
-        .withColumn("effective_end", today - F.expr("INTERVAL 1 DAY")) \
-        .withColumn("is_current", F.lit(0))
-    new_rows = changed.withColumn("effective_start", today) \
-        .withColumn("effective_end", F.lit(None).cast("date")) \
-        .withColumn("is_current", F.lit(1))
-    unchanged = cur.join(changed.select("supplier_id"), "supplier_id", "left_anti")
+
+    # Close existing records for suppliers with changed ratings
+    closed = (
+        cur.join(changed.select("supplier_id"), "supplier_id")
+           .withColumn("effective_end", today - F.expr("INTERVAL 1 DAY"))
+           .withColumn("is_current", F.lit(0))
+    )
+
+    # Insert new active records with updated rating values
+    new_rows = (
+        changed.withColumn("effective_start", today)
+               .withColumn("effective_end", F.lit(None).cast("date"))
+               .withColumn("is_current", F.lit(1))
+    )
+
+    # Retain current records where the rating did not change
+    unchanged = cur.join(
+        changed.select("supplier_id"),
+        on="supplier_id",
+        how="left_anti"
+    )
+
+    # Preserve historical records that are already closed
     hist = prev_dim.filter("is_current = 0")
-    out.write(hist.unionByName(closed).unionByName(unchanged).unionByName(new_rows))
+
+    # Merge historical, closed, unchanged, and new active records
+    out.write(
+        hist
+        .unionByName(closed)
+        .unionByName(unchanged)
+        .unionByName(new_rows)
+    )
 ```
 
 ---
@@ -311,21 +420,43 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("ri.ins.dim.customer_seg_type3"),
-    src=Input("ri.ins.src.customer_seg_delta"),
-    out=Output("ri.ins.dim.customer_seg_type3_out")
+    prev_dim=Input("ri.ins.dim.customer_seg_type3"),        # Existing customer segment dimension (Type 3)
+    src=Input("ri.ins.src.customer_seg_delta"),             # Delta feed with latest segment values
+    out=Output("ri.ins.dim.customer_seg_type3_out")         # Updated Type 3 output
 )
 def compute(prev_dim, src, out):
+
+    # Alias dimension and source for clarity during joins
     d = prev_dim.alias("d")
     s = src.alias("s")
+
+    # Outer join to handle both existing and new customers
     j = d.join(s, "customer_id", "outer")
-    updated = j.filter(F.col("s.segment").isNotNull()).select(
+
+    # Build updated records:
+    # - segment_current always reflects the latest segment
+    # - segment_previous stores the prior value when a change occurs
+    updated = j.filter(
+        F.col("s.segment").isNotNull()
+    ).select(
         F.coalesce(F.col("d.customer_id"), F.col("s.customer_id")).alias("customer_id"),
         F.col("s.segment").alias("segment_current"),
-        F.when(F.col("d.segment_current") != F.col("s.segment"), F.col("d.segment_current")) \
-         .otherwise(F.col("d.segment_previous")).alias("segment_previous")
+        F.when(
+            F.col("d.segment_current") != F.col("s.segment"),
+            F.col("d.segment_current")
+        ).otherwise(
+            F.col("d.segment_previous")
+        ).alias("segment_previous")
     )
-    unchanged = prev_dim.join(updated.select("customer_id"), "customer_id", "left_anti")
+
+    # Retain records where no segment update was received
+    unchanged = prev_dim.join(
+        updated.select("customer_id"),
+        on="customer_id",
+        how="left_anti"
+    )
+
+    # Merge unchanged records with updated segment information
     out.write(unchanged.unionByName(updated))
 ```
 
@@ -336,22 +467,44 @@ from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 
 @transform(
-    prev_dim=Input("scm.dim.inventory_status_type3"),
-    src=Input("scm.src.inventory_status_delta"),
-    out=Output("scm.dim.inventory_status_type3_out")
+    prev_dim=Input("scm.dim.inventory_status_type3"),      # Existing inventory status dimension (Type 3)
+    src=Input("scm.src.inventory_status_delta"),           # Delta feed with latest status values
+    out=Output("scm.dim.inventory_status_type3_out")       # Updated Type 3 output
 )
 def compute(prev_dim, src, out):
+
+    # Alias dimension and source for readability
     d = prev_dim.alias("d")
     s = src.alias("s")
+
+    # Outer join to handle both existing and new SKU–location combinations
     j = d.join(s, ["sku_id", "location_id"], "outer")
-    updated = j.filter(F.col("s.status").isNotNull()).select(
+
+    # Build updated records:
+    # - status_current holds the latest inventory status
+    # - status_previous stores the prior status when a change occurs
+    updated = j.filter(
+        F.col("s.status").isNotNull()
+    ).select(
         F.coalesce(F.col("d.sku_id"), F.col("s.sku_id")).alias("sku_id"),
         F.coalesce(F.col("d.location_id"), F.col("s.location_id")).alias("location_id"),
         F.col("s.status").alias("status_current"),
-        F.when(F.col("d.status_current") != F.col("s.status"), F.col("d.status_current")) \
-         .otherwise(F.col("d.status_previous")).alias("status_previous")
+        F.when(
+            F.col("d.status_current") != F.col("s.status"),
+            F.col("d.status_current")
+        ).otherwise(
+            F.col("d.status_previous")
+        ).alias("status_previous")
     )
-    unchanged = prev_dim.join(updated.select("sku_id", "location_id"), ["sku_id", "location_id"], "left_anti")
+
+    # Retain inventory records where no status update was received
+    unchanged = prev_dim.join(
+        updated.select("sku_id", "location_id"),
+        on=["sku_id", "location_id"],
+        how="left_anti"
+    )
+
+    # Merge unchanged records with updated status information
     out.write(unchanged.unionByName(updated))
 ```
 
