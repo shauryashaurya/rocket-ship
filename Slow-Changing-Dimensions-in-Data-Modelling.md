@@ -741,3 +741,6 @@ SELECT * FROM dim WHERE effective_end IS NOT NULL AND effective_end < effective_
 
 ---
     
+- Incremental processing primitives optimize recomputation of SCD tables by updating only affected partitions or records.
+- Integrated data quality checks and expectations help detect anomalies in historical changes early, reducing risk of silent SCD corruption.
+- Consistent semantics across batch and incremental pipelines simplify implementing and maintaining different SCD types (Type 1, 2, 3, etc.) within a single platform
