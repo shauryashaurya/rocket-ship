@@ -3,3 +3,4 @@ description: intelligence.join(analytics, on=["smarts"], how="left")
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-midnight
+markdown: kramdown
