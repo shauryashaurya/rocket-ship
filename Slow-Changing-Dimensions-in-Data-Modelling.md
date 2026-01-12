@@ -1,6 +1,11 @@
 # Slow Changing Dimensions - A Palantir Foundry Perspective
-
-#### housekeeping stuff:
+          
+## Collab     
+1. [Prashant Jha](https://github.com/PrashantJha29), [LinkedIn](https://www.linkedin.com/in/prashantjha29/)    
+2. [Anudeep Chatradi](https://github.com/anudeepchatradi), [LinkedIn](https://www.linkedin.com/in/anudeep-chatradi-78757298/)    
+    
+     
+#### Housekeeping stuff
 - `prev_dim_*` = previous dim dataset
 - `src_*` = new snapshot/delta
 - Foundry: `@transform`, `Input`, `Output` used as standard
@@ -59,7 +64,8 @@ flowchart TD
     O --> Q
     P --> Q
 ```
-
+        
+We'll dig deeper, use 2 kinds of examples - insurance and supply chain - because the domains are fairly different, so it gives us a more comprehensive idea of how the concepts work.
   
 --- 
 
