@@ -1,8 +1,10 @@
-
 ---
 layout: default
 title: "Slow Changing Dimensions - A Palantir Foundry Perspective"
 ---
+
+
+
 
 # Slow Changing Dimensions - A **Palantir Foundry** Perspective
           
