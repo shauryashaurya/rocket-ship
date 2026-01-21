@@ -143,3 +143,127 @@ Spark:
 - Builds the dependency graph
 - Executes flows in order
 - Monitors execution
+  
+
+# Programming with SDP in SQL (Reinsurance Examples)
+## Creating a Materialized View (Batch) 
+```sql
+CREATE MATERIALIZED VIEW policiesmv
+AS
+SELECT
+  policyid,
+  insuredname,
+  lob,
+  region,
+  effectivedate,
+  expirydate,
+  limitamount,
+  deductibleamount
+FROM reinsurancesource.policies_curated;
+```
+ 
+## Creating a Temporary View (Intermediate)
+```sql
+CREATE TEMPORARY VIEW policytreatymaptv
+AS
+SELECT
+  p.policyid,
+  t.treatyid,
+  p.region,
+  p.lob
+FROM policiesmv p
+JOIN treaties_mv t
+  ON p.region = t.region
+AND p.lob    = t.lob;
+```
+
+## Creating a Streaming Table
+```sql 
+CREATE STREAMING TABLE rawclaimsst
+AS
+SELECT
+  claimid,
+  policyid,
+  eventts,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
+FROM STREAM reinsurancesource.claims_events;
+```
+
+## Querying Tables in the Pipeline — Enrich → Aggregate
+### Enriched claims (batch MV consuming streaming):
+```sql
+CREATE MATERIALIZED VIEW claimsenrichedmv
+AS
+SELECT
+  c.claimid,
+  c.policyid,
+  m.treatyid,
+  c.lossdate,
+  c.lossamountgross,
+  c.region,
+  c.lob
+FROM rawclaimsst c
+LEFT JOIN policytreatymaptv m
+  ON c.policyid = m.policy_id
+AND c.region    = m.region
+AND c.lob       = m.lob;
+```
+
+### Treaty loss allocation (illustrative share):
+```sql
+CREATE MATERIALIZED VIEW treatyallocationsmv
+AS
+SELECT
+  e.treatyid,
+  e.lossdate,
+  SUM(e.lossamountgross * COALESCE(t.share, 1.0)) AS treatyloss
+FROM claimsenrichedmv e
+LEFT JOIN treatiesmv t
+  ON e.treatyid = t.treatyid
+GROUP BY e.treatyid, e.lossdate;
+```
+
+### Daily treaty loss (final analytics):
+```sql 
+CREATE MATERIALIZED VIEW dailytreatylossesmv
+AS
+SELECT
+  treatyid,
+  lossdate,
+  SUM(treatyloss) AS dailytreatyloss
+FROM treatyallocationsmv
+GROUP BY treatyid, lossdate;
+```
+
+## Using Multiple Flows to Write to a Single Target
+``` sql
+-- Unified streaming target
+CREATE STREAMING TABLE claimsconsolidatedst;
+ 
+-- Cedant A unified
+CREATE FLOW appendcedanta
+AS INSERT INTO claimsconsolidatedst
+SELECT
+  claimid,
+  policyid,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
+FROM STREAM cedantaclaimsst;
+ 
+-- Cedant B unified
+CREATE FLOW appendcedantb
+AS INSERT INTO claimsconsolidatedst
+SELECT
+  claimid,
+  policyid,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
+FROM STREAM cedantbclaimsst;
+```
