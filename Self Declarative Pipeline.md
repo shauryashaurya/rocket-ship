@@ -343,7 +343,7 @@ AND p.lob    = t.lob;
 ```
 
 ### Creating a Streaming Table
-```sql 
+```sql
 CREATE STREAMING TABLE rawclaimsst
 AS
 SELECT
