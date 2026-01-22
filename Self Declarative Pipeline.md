@@ -1,4 +1,11 @@
-## Self Declarative Pipeline: A Palantir Foundry Perspective
+# Self Declarative Pipeline: A Palantir Foundry Perspective
+
+## Collab
+1. [Ankita Hatibaruah](https://github.com/Ahb98), [LinkedIn](http://linkedin.com/in/ankita-hatibaruah-bb2a62218)
+2. [Pavithra Ananthakrishnan](https://github.com/Pavi-245), [LinkedIn](https://www.linkedin.com/in/pavithra-ananthakrishnan-552416244/)
+3. [Sree Bhavya Kanduri](https://github.com/sreebhavya10), [LinkedIn](https://www.linkedin.com/in/kanduri-sree-bhavya-4001a6246?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
+
+## TL;DR   
 This repository provides a structured, end to end overview of Spark Declarative Pipelines (SDP) introduced in Spark 4.1, using reinsurance‑domain examples and explaining why SDP aligns naturally with Palantir Foundry’s data‑platform philosophy.
 The intent is two fold:
 - Serve as a technical reference for SDP concepts and examples
