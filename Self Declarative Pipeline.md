@@ -145,11 +145,11 @@ Spark:
 - Monitors execution
   
 ## Programming with SDP in Python (Reinsurance Examples)
-#### These examples demonstrates how to build data pipelines for reinsurance analytics using Spark Data Pipelines (SDP). The examples show how to define different types of views and tables—materialized views, temporary views, and streaming tables—to handle both batch and streaming data sources.
+These examples demonstrates how to build data pipelines for reinsurance analytics using Spark Data Pipelines (SDP). The examples show how to define different types of views and tables—materialized views, temporary views, and streaming tables—to handle both batch and streaming data sources.
 
-#### The pipeline ingests raw claims and cessions from Kafka, enriches them with policy and treaty reference data, and then aggregates losses at the treaty and regional levels. It also illustrates how multiple data flows can be consolidated into a unified streaming target.
+The pipeline ingests raw claims and cessions from Kafka, enriches them with policy and treaty reference data, and then aggregates losses at the treaty and regional levels. It also illustrates how multiple data flows can be consolidated into a unified streaming target.
 
-#### In essence, these examples walk through the end-to-end process of transforming raw insurance event streams into curated, queryable datasets that support reinsurance reporting and loss allocation.
+In essence, these examples walk through the end-to-end process of transforming raw insurance event streams into curated, queryable datasets that support reinsurance reporting and loss allocation.
 ### Import the pipelines API from PySpark to use SDP decorators for defining tables and views.
 ```bash
 from pyspark import pipelines as sdp
