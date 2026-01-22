@@ -1,4 +1,4 @@
-# Self Declarative Pipeline: A Palantir Foundry Perspective
+# Self Declarative Pipeline
 
 ## Collab
 1. [Ankita Hatibaruah](https://github.com/Ahb98), [LinkedIn](http://linkedin.com/in/ankita-hatibaruah-bb2a62218)
@@ -38,18 +38,7 @@ SDP is designed for both batch and streaming workloads and supports common enter
 - Data ingestion from cloud storage\(Amazon S3, Azure ADLS Gen2, Google Cloud Storage)
 - Data ingestion from message buses\(Apache Kafka, Amazon Kinesis, Google Pub/Sub, Azure EventHub)
 - Incremental batch and streaming transformations
-
-## Why SDP Matters (Especially at Palantir)
-Palantir data platforms emphasize:
-- Dataset lineage
-- Ontology‑driven modeling
-- Incremental recomputation
-- A strict separation between what data represents and how it is computed
-	
-SDP brings these same principles directly into open‑source Spark.
-  Foundry‑style pipeline semantics become native Spark semantics with SDP.
 ​
-
 ## Dataflow Graph
 Every SDP pipeline is represented as a dataflow graph:
 - Nodes → datasets (tables or views)
