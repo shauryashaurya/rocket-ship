@@ -26,7 +26,7 @@ A new declarative framework where users define what datasets and queries should 
 #### Value:
 Reduces orchestration complexity and boilerplate, enabling reliable, production-grade pipelines with minimal effort.
 
-For detailed overview of SDP, refer to the document linked [SDP(Spark 4.1)](https://github.com/Ahb98/rocket-ship/blob/main/SDP_Palantir.md)
+For detailed overview of SDP, refer to the document linked [SDP(Spark 4.1)](https://github.com/Ahb98/rocket-ship/blob/main/Spark%20Declarative%20Pipeline.md)
 
 ### 2. Structured Streaming – Real-Time Mode (RTM)
 
