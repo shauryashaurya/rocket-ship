@@ -85,7 +85,7 @@ Foundry treats evaluation as a core phase of the software lifecycle, not an afte
 
 - LLM-as-a-Judge: You can configure a separate, stronger model (e.g., GPT-4) to act as a "Judge" for your production model (e.g., Llama 3). The Judge automatically grades responses (Pass/Fail) based on criteria you define (e.g., "Did the answer reference the correct Policy ID?").
 
-- The "Ground Truth" Loop: When a human expert corrects the AI in the frontend application, that correction is written back to the Ontology. This creates a self-reinforcing "Ground Truth" dataset that can be automatically pulled into the next Evaluation Suite run.
+- Human-in-the-Loop: This is the most critical accelerator. Foundry allows you to capture user feedback directly from the application interface and feed it back into the testing cycle. This creates a self-reinforcing "Ground Truth" dataset that can be automatically pulled into the next Evaluation Suite run. The system gets smarter with every user interaction.
 
 AIP Evals replaces "Vibe Checks" with Systematic Engineering. You can deploy with confidence knowing exactly how your changes affected accuracy across thousands of real-world scenarios.
 
@@ -93,12 +93,16 @@ AIP Evals replaces "Vibe Checks" with Systematic Engineering. You can deploy wit
 ### Governance & Security: Production by Default
 In a custom AWS?+/Azure stack, security is often an overlay. You have to manually synchronize permissions between your Vector DB, your SQL DB, and your application layer. If you forget to update the Vector DB's ACLs, your RAG agent might leak sensitive data.
 
-Palantir's Foundry uses an Ontology-Centric Security model.
+Palantir's Foundry uses an robust security model.
 
 - Granular Propagation (Markings): Security is not just applied to the "App"; it is applied to the Data. If a row of data has a "sensitive" Marking, that marking propagates to every derivative dataset, model, and index automatically.
 
 - Inherited Permissions: When a user asks an AIP Agent a question, the Agent does not run as a "Super User." It runs with the exact permissions of the user. If the user is restricted from seeing "Region: EMEA" data, the Agent literally cannot "see" those vectors to retrieve them.
 
-- Full Lineage & Checkpoints: Every token generated and every Action taken is logged. For sensitive operations, you can enforce "Checkpoints"- requiring the user (or Agent) to provide a justification (e.g., "Why are you accessing this PII?") before the platform releases the data.
-
 Security reviews are often the biggest blocker for GenAI production. Because AIP inherits your existing enterprise permissions (RBAC/ABAC) and lineage automatically, you can deploy "action-taking" agents in days, avoiding the months of security audits required for custom-built agents.
+
+
+### Conclusion
+The argument for building on AWS or Azure primitives is usually "Flexibilit". However when we talk about GenAI, this flexibility comes at a cost of velocity. The cost of engineering hours spent configuring VPCs, writing code and maintaining the setup usually ends ups being much higher than Palantir fees.
+
+Palantir Foundry acts as a accelerator because it enforces an **opiniated architecture**. By abstracting away the infrastruture setup, goveranceand secutiry it allows you to focus only thing that matters: **Solving the business problem.**
