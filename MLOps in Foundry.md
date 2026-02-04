@@ -322,17 +322,7 @@ otherwise it can also be published as a function in ontology manager ![Model in 
 or imported in typescript repository ![Palantir TS repository](https://github.com/achaudhury7378/rocket-ship/blob/patch-2/images/Screenshot%202026-02-04%20001939.png)
 ## Comparison with Other MLOps Tools
 The table below compares Palantir Foundry with common MLOps tools, including MLflow, across core lifecycle capabilities.
-| Capability | Palantir Foundry | MLflow | Kubeflow | AWS SageMaker |
-|-----------|-----------------|--------|----------|---------------|
-| **Feature Management** | Built-in via data pipelines and ontology | Limited (no native feature store) | Requires Feast or custom setup | Native Feature Store |
-| **Experiment Tracking** | Integrated via Modeling Objectives | Core strength | Via Katib / Pipelines | Native |
-| **Model Registry** | Integrated within Objectives | Native model registry | Custom implementation | Native registry |
-| **Data Versioning & Lineage** | Automatic and platform-wide | External tools required | External | Partial |
-| **Deployment** | Built-in batch and live deployments | Limited (external infrastructure needed) | KServe-based | Fully managed |
-| **Monitoring & Feedback** | Lineage-based and metric-driven | Minimal | Requires add-ons | Integrated (CloudWatch) |
-| **Governance & Security** | Enterprise-grade, fine-grained | Weak | Depends on cluster configuration | Strong within AWS |
-| **Operational Integration** | Deep integration with business workflows | Minimal | Platform-focused | Cloud-service-focused |
-
+![Comparison Chart](https://github.com/anudeepchatradi/rocket-ship/blob/main/images/Screenshot_2026-02-04-21-33-12-75_40deb401b9ffe8e1df2f1cc5ba480b12.jpg)
 
 Key Insight:
 
