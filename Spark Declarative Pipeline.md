@@ -1,4 +1,15 @@
-# Spark Declarative Pipeline (Spark 4.1.1)
+---
+layout: default
+title: "Spark Declarative Pipelines (Spark 4.1.1)"
+---
+
+
+
+            
+# Spark Declarative Pipelines (Spark 4.1.1)                                     
+                                        
+<img src="./images/02-01-spark-declarative-pipelines.png" width="95%" align="center" alt="Spark Declarative Pipelines (Spark 4.1.1)" />                                    
+          
 
 ## Collab
 1. [Ankita Hatibaruah](https://github.com/Ahb98), [LinkedIn](http://linkedin.com/in/ankita-hatibaruah-bb2a62218)

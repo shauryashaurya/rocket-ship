@@ -6,7 +6,10 @@ title: "Slow Changing Dimensions - A Palantir Foundry Perspective"
 
 
 
-# Slow Changing Dimensions <br/> A **Palantir Foundry** Perspective
+# Slow Changing Dimensions <br/> A **Palantir Foundry** Perspective                                     
+                                        
+<img src="./images/01-slow-changing-dimensions.png" width="95%" align="center" alt="Slow Changing Dimensions A Palantir Foundry Perspective" />                                    
+          
           
 ## Collab     
 1. [Prashant Jha](https://github.com/PrashantJha29), [LinkedIn](https://www.linkedin.com/in/prashantjha29/)    

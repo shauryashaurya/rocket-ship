@@ -1,4 +1,14 @@
-# Apache Spark 4.1
+---
+layout: default
+title: "More notes on the Apache Spark 4.1 release"
+---
+
+
+
+
+# More notes on the Apache Spark 4.1 release                                     
+                                        
+<img src="./images/02-02-spark-4-1-release.png" width="95%" align="center" alt="More notes on the Apache Spark 4.1 release" />      
 
 ## Collab
 1. [Ankita Hatibaruah](https://github.com/Ahb98), [LinkedIn](http://linkedin.com/in/ankita-hatibaruah-bb2a62218)

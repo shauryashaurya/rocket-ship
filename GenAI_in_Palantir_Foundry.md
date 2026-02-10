@@ -1,6 +1,14 @@
+---
+layout: default
+title: "GenAI Applications in Palantir Foundry (AIP)"
+---
 
-# Accelerating GenAI Development with Palantir Foundry
 
+
+
+# Accelerating GenAI Development with Palantir Foundry   
+    
+<img src="./images/04-genai-aip-foundry.png" width="95%" align="center" alt="GenAI Applications in Palantir Foundry (AIP)" />
 
 ## Introduction
 
