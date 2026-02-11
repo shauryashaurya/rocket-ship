@@ -229,52 +229,76 @@ Traditional Cloud
 - Metadata scanners
 - Manual tagging
 
-3. Built-In Dev → Test → Prod Promotion Model
+## 3.Built-In Dev → Test → Prod Promotion Model
 
+In Palantir Foundry, data pipelines behave like software releases, not just scheduled jobs.
+
+Instead of manually managing environments and deployments, Foundry provides a native promotion workflow for:
+
+- Transforms
+- Datasets
+- Pipelines
+- Ontology changes
+- Applications
+This capability is built directly into the platform — not added through external CI/CD tooling.
+
+Foundry Capabilities
+
+- Branch-based data development
+- Dataset versioning
+- Transform versioning
+- Safe promotion workflows
+- Data diff between versions
+- Rollback support
+
+Engineers develop changes in isolated branches, validate outputs using dataset diffs, and promote updates through controlled workflows. Every dataset and transform version is reproducible and rollback-ready.
 
 Traditional Cloud
 
 Usually requires:
-Separate environments
-CI/CD tooling
-Custom deployment scripts
-Manual data validation
+- Separate environments
+- CI/CD tooling
+- Custom deployment scripts
+- Manual data validation
+
 ➡️ Not platform-native.
 
 4. Dataset Versioning + Time Travel by Default
 
-Foundry
-
-Every dataset is:
-Versioned
-Snapshot tracked
-Reproducible
-Rollback capable
-Auditable
-You can answer:
-“What did this dataset look like 3 months ago?”
-Instantly.
-
 In Palantir Foundry, datasets are not mutable tables that get overwritten.
-
-Instead, every dataset build creates a new immutable version (snapshot).
+Every dataset build creates a new immutable version (snapshot).
 
 ```bash
 Not: overwrite table
 But: create new dataset version
 ```
 
-In Palantir Foundry, every dataset is automatically versioned and stored as immutable snapshots. Each build produces a new dataset version tied to the exact input versions, transform code, and execution context, making outputs fully reproducible and auditable. Engineers can instantly time-travel to see what a dataset looked like at any point in the past, compare versions, and roll back if needed. Unlike traditional cloud platforms — where table history and time travel require specific storage formats and extra configuration — Foundry provides dataset versioning and historical traceability by default across the platform.
+Every dataset is automatically:
 
+Versioned
+Snapshot tracked
+Reproducible
+Rollback capable
+Auditable
+Each version is tied to:
+Input versions
+Transform code
+Execution context
+You can instantly answer:
+“What did this dataset look like 3 months ago?”
+Engineers can time-travel, compare versions, and roll back if needed.
 Traditional Cloud
+Requires specific storage formats:
+Delta Lake
+Iceberg
+Hudi
 
-Needs:
-Delta Lake / Iceberg / Hudi
+Plus:
+
 Extra configuration
 Retention policies
 Storage planning
-
-➡️ Not universal across stack.
+➡️ Not universal across the stack.
 
 5. Policy-Aware Data — Security Travels With Data
 
