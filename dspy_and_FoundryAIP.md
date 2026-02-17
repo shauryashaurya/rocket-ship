@@ -1,5 +1,10 @@
 # Leveraging DSPy with Foundry AIP: Adaptive AI Meets Enterprise-Grade Infrastructure
 
+## Collab
+
+1. [Nilesh Saraf](https://github.com/nileshsaraf56), [LinkedIn](https://www.linkedin.com/in/nilesh-saraf-8b7aa327b/)
+2. [Abhishek Chaudhury](https://github.com/achaudhury7378), [LinkedIn](https://www.linkedin.com/in/abhishek-chaudhury-07422b191/)
+
 ## Introduction
 
 As LLM-powered systems move from demos to real enterprise workflows, traditional prompting starts to show its limits. Static prompts are brittle, hard to evaluate systematically, and difficult to optimize as requirements evolve—especially in Retrieval-Augmented Generation (RAG) systems.
@@ -109,6 +114,9 @@ def retrieve_context(collection, query, n_results=3):
     results = collection.query(query_texts=[query], n_results=n_results)
     return results["documents"][0] if results["documents"] else []
 ```
+
+![build-knowledge-base](images/Build_Knowledge_Base.png?raw=True)
+
 In this local prototype:
 
 - The knowledge base is in-memory.
@@ -130,7 +138,7 @@ One of the most interesting aspects of DSPy is that it enables *agentic adjustme
 
 If too few or too many stocks pass the filters, the model dynamically modifies constraints.
 
-## 4️⃣ Agentic Filter Adjustment + Orchestration
+## Agentic Filter Adjustment + Orchestration
 
 ```python
 class NLStockScreener(dspy.Module):
@@ -181,6 +189,8 @@ This module composes:
 The result is a multi-step reasoning pipeline—defined programmatically rather than prompt-crafted manually.
 
 ---
+
+![rag-final-result](images/RAG_Final_Result.png?raw=True)
 
 # Where Foundry AIP Comes In
 
