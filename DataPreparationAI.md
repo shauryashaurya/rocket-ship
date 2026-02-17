@@ -4,7 +4,7 @@ title: "Data Preparation for AI"
 ---
 
 # Data Preparation for AI
-<img src="https://media.licdn.com/dms/image/v2/D4D12AQFOtVwp75w1bA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1727859342774?e=2147483647&v=beta&t=bGPo320M-76P5KipNZ_E1GTFgCMWQGipWVNWJNsrYqY" alt="Data Preparation for AI" /> 
+[[<img src="https://media.licdn.com/dms/image/v2/D4D12AQFOtVwp75w1bA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1727859342774?e=2147483647&v=beta&t=bGPo320M-76P5KipNZ_E1GTFgCMWQGipWVNWJNsrYqY" alt="Data Preparation for AI" /> ](https://www.google.com/imgres?q=data%20preparation%20for%20ai%20images&imgurl=https%3A%2F%2Fwww.actian.com%2Fwp-content%2Fuploads%2F2023%2F12%2Fdata-preparation-for-AI.jpg&imgrefurl=https%3A%2F%2Fwww.actian.com%2Fdata-preparation-for-ai%2F&docid=Fg-Tr6vkts6ZiM&tbnid=aLWA-a297VupqM&vet=12ahUKEwj9-L6hzuCSAxVFzzgGHfBsBKEQnPAOegQIHxAB..i&w=815&h=500&hcb=2&ved=2ahUKEwj9-L6hzuCSAxVFzzgGHfBsBKEQnPAOegQIHxAB)](https://www.google.com/imgres?q=data%20preparation%20for%20ai%20images&imgurl=https%3A%2F%2Fwww.actian.com%2Fwp-content%2Fuploads%2F2023%2F12%2Fdata-preparation-for-AI.jpg&imgrefurl=https%3A%2F%2Fwww.actian.com%2Fdata-preparation-for-ai%2F&docid=Fg-Tr6vkts6ZiM&tbnid=aLWA-a297VupqM&vet=12ahUKEwj9-L6hzuCSAxVFzzgGHfBsBKEQnPAOegQIHxAB..i&w=815&h=500&hcb=2&ved=2ahUKEwj9-L6hzuCSAxVFzzgGHfBsBKEQnPAOegQIHxAB)
 
 ## Collab     
 1. [Pavan Kumar Busetty](https://github.com/pavankumarbusetty), [LinkedIn](https://www.linkedin.com/in/pavankumar-busetty/)
