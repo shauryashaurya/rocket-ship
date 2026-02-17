@@ -431,4 +431,99 @@ return text extracted_data["normalized_text"]=extracted_data["text"].apply(norma
 
 ```
 
+#### Step 4: Semantic Chunking
+Semantic chunking splits text into meaningful units (e.g., sentences, paragraphs, or sections) rather than arbitrary fixed-size chunks. This improves the quality of embeddings and search results.
+Why it matters: Semantic chunking ensures that each chunk is contextually coherent, improving retrieval and LLM performance in tasks like semantic search and summarization.
 
+```
+import pandas as pd import nltk 
+# Ensure the punkt tokenizer is available (run once per environment) nltk.download('punkt') 
+def sentence_chunk(text): 
+""" Splits text into sentences using NLTK's sentence tokenizer. """ 
+if not isinstance(text, str): 
+return [] 
+return nltk.sent_tokenize(text) 
+# Example DataFrame with extracted text 
+df = pd.DataFrame({ "object_id": ["doc1", "doc2"], "extracted_text": [ "This is a long PDF text. It needs to be chunked for embedding. Here is another sentence.", "Another document's extracted text goes here. It has multiple sentences." ] 
+}) 
+# Apply sentence chunking 
+df["chunks"] = df["extracted_text"].apply(sentence_chunk) 
+# Explode chunks into separate rows for downstream processing df_chunks = df.explode("chunks").reset_index(drop=True) 
+df_chunks["chunk_id"] = df_chunks.groupby("object_id").cumcount() df_chunks["unique_chunk_id"] = df_chunks["object_id"] +"_"+df_chunks["chunk_id"].astype(str)
+
+```
+
+#### Step 5: Embeddings
+Embeddings convert text chunks into vectors for semantic search and AI workflows. Foundry supports several models:
+**Embedding Models Comparison**
+
+| Model Name | Language Support | Max Input Length | Use Case |
+|------------|------------------|------------------|-----------|
+| **text-embedding-ada-002** | English, Multilingual | ~8192 tokens | General semantic search |
+| **MSMARCO (sentence-transformers)** | English | 512 tokens | Query–passage retrieval |
+| **all-MiniLM-L6-v2** | English | 512 tokens | General-purpose embeddings |
+| **Custom (Imported) Models** | Varies | Varies | Domain-specific tasks |
+
+```
+from transforms.api import transform, Input, Output 
+from palantir_models.transforms import ModelInput @transform( input_chunks=Input("ri.foundry.main.dataset.chunks"), output=Output("ri.foundry.main.dataset.embeddings"), embedding_model=ModelInput("ri.language-model-service.language-model.text-embedding-ada-002"), 
+) 
+def compute(ctx, input_chunks, output, embedding_model):
+df = input_chunks.dataframe() 
+df = df.rename(columns={"chunks": "text"}) 
+result = embedding_model.transform(df).output_data 
+output.write_dataframe(result)
+```
+
+#### Step 6: Vector Database Integration
+A vector database is a specialized data store designed to efficiently index, store, and search high-dimensional vectors—such as the embeddings generated from text, images, or other unstructured data. Vector databases are optimized for operations like nearest neighbor search, which is essential for<br>
+
+The embeddings you create from text chunks (using models like text-embedding-ada-002 or all-MiniLM-L6-v2) are high-dimensional vectors that capture the semantic meaning of the original data. Storing these embeddings in a vector database allows you to:<br>
+
+-	Perform semantic search: Retrieve documents or text chunks that are semantically similar to a query, even if they don’t share exact keywords.
+-	Enable advanced AI applications: Power use cases like question answering, document clustering, and recommendations by comparing vector similarity.
+-	Scale to large datasets: Efficiently index and search millions of vectors using approximate nearest neighbor algorithms.
+
+Vector Database Integration in Foundry:<br>
+-	Store embedding vectors as properties on objects within the Ontology, enabling similarity search and advanced retrieval workflows.
+-	Index and query these embeddings using nearest neighbor search, supporting applications like document Q&A, semantic search, and recommendation engines.
+-	Link vector data with metadata, access controls, and lineage tracking, ensuring robust governance and traceability.
+
+#### Step 7: Data Versioning
+Data versioning is essential for reproducibility, auditing, and collaboration:
+-	Foundry tracks versions of datasets, pipelines, and models. Every change creates a new version, allowing you to roll back, compare, or audit changes.
+-	Semantic versioning is used for code and function releases, ensuring stability and backward compatibility.
+-	Best Practice: Lock production pipelines, require code reviews, and use versioned datasets for traceability and compliance.
+
+#### Step 8: Decide transform type (Incremental vs. Snapshot Transforms)
+When building data pipelines in Palantir Foundry, choosing between incremental and snapshot transforms is crucial for performance, scalability, and data freshness.
+Snapshot Transforms: Process the entire input dataset every time the pipeline runs.<br>
+Incremental Transforms: Only process new or changed data since the last successful pipeline runs.<br>
+
+**Best Practices**:
+-	For SharePoint ingestion and ongoing document processing, use incremental transforms to process only new or updated files, ensuring timely extraction and embedding without reprocessing the entire corpus.
+-	For one-time migrations or when the transformation logic changes significantly, use snapshot transforms to ensure all data is processed with the latest logic.
+-	Foundry allows you to configure transform type in both Pipeline Builder and code repositories, supporting flexible and robust pipeline design.
+
+## How Palantir Foundry Is Different 
+
+-	**Unified Data & AI Platform**
+ A single environment for ingestion, transformation, modeling, and operationalization, removing the need for multiple disjointed tools and reducing integration overhead.
+-	**Ontology‑Driven Data Modeling**
+ A semantic layer that links data, business logic, and access controls. This goes beyond catalogs/registries by enabling context-rich analytics, AI, and secure, governed data relationships.
+-	**No‑Code + Pro‑Code Flexibility**
+ Visual tools (Pipeline Builder, Quiver, Contour) and full-code experiences (Workspaces, Code Repos) in one platform. Users can fluidly move from no‑code to code without tool switching.
+-	**Enterprise‑Grade Security & Governance**
+ Fine‑grained access control, full lineage, and automatic versioning for every dataset, pipeline, and model—ensuring auditability and compliance by design.
+-   **Scalability & Performance**
+ Built for massive data and complex pipelines with distributed compute, support for batch + streaming, and infrastructure that scales automatically.
+-  **Integrated Model Management**
+ Native ML tooling for training, deployment, monitoring, plus support for external and containerized models—simplifying the entire ML lifecycle.
+- **Interoperability**
+ Connects seamlessly with tools like Jupyter, PowerBI, and Tableau, and supports open standards to fit cleanly into existing enterprise ecosystems.
+-	**Production‑Ready Pipelines**
+ Incremental/snapshot transforms, strong scheduling, and resilient error handling make it easy to build and maintain robust, production-grade data and AI pipelines.
+-	**Collaboration & Auditability**
+ Built‑in version control, comments, and activity history ensure smooth collaboration and full traceability across teams.
+
+Palantir Foundry stands out for its unified platform, semantic data modeling , robust governance, flexible user experience, and production-grade scalability. These features enable organizations to move from raw data to operational AI solutions faster and with greater confidence than most other platforms.
