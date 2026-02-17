@@ -100,4 +100,47 @@ from transforms import expectations as E
     product_input=Input("raw_product_dataset"),
 )
 ```
+Similarly, type enforcements checks were applied on the customer dataset:
+```
+from transforms.api import transform, Input, Output, Check
+from transforms import expectations as E
+@transform.spark.using(
+    output=Output(
+        " clean_customer_dataset ",
+        checks=[
+            Check(E.col("email").has_type(T.StringType()), "email must be string"),
+            Check(E.col("phone").has_type(T.StringType()), "phone must be string"),
+            Check(E.col("age").has_type(T.IntegerType()), "age must be integer"),
+            Check(E.col("registration_date").has_type(T.TimestampType()), "registration_date must be timestamp"),
+        ]
+    ),
+    customer_input=Input("raw_customer_dataset "),
+)
+```
+
+### Step 3: Ontology Mapping
+
+While most traditional data platforms stop at producing clean tables, Foundry extends this layer by turning structured datasets into business-aware objects with defined meaning, relationships, and governance. This semantic layer is what allows analytics and AI systems to interact with data in a more natural and consistent way.
+
+**From Clean Data to Intelligent Business Assets**
+Cleaning improves data quality, but clean tables alone still lack business context. This is where Foundry's Ontology becomes transformative by
+converting clean datasets into governed business objects with meaning, relationships and security that AI and analytics systems can directly reason on
+The ontology creation process transforms technical datasets into semantic business assets through strategic steps:
+
+#### Step 1 — Identify Business Objects
+Map cleaned datasets to core business entities (object types), not raw tables:
+•	Customer ← Customer dataset
+•	Product ← Product Inventory dataset
+•	Sales ← Sales Transactions dataset
+
+Create them from **New** → **Object Type**
+
+<img width="341" height="399" alt="image" src="https://github.com/user-attachments/assets/aca2d69e-ec3e-4725-af87-5ef9eb009ff9" />
+
+#### Step 2 — Choose Stable Identifiers
+Each object type must be anchored to a stable, globally unique identifier. These identifiers ensure that the same real-world entity is consistently recognized across datasets, pipelines, and applications. For example, Customer ID can serve as the primary key for the Customer object, while a human-readable attribute such as Last Name can be used as the display title.
+
+<img width="939" height="607" alt="image" src="https://github.com/user-attachments/assets/12db3dfd-b55b-4a8c-a6c8-525101a6f34d" />
+
+The same principle is applied across Product and Sales objects to maintain consistent identity and traceability across the ontology.
 
