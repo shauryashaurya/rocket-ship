@@ -254,6 +254,7 @@ Unstructured Data → Parsing → Extraction → Text → Chunking → Tokenizat
 #### STEP‑BY‑STEP PIPELINE
 #### Step 1 — Upload Unstructured Files to a Media Set
 ![P2](images/5_DataAI_P2.png)
+
 Unstructured documents like **PDFs, PPTs, scanned pages, or images** are uploaded into a Media Set.
 -	At this stage, files are still **raw binary data**.
 -	No semantic meaning exists yet.
