@@ -138,7 +138,7 @@ Map cleaned datasets to core business entities (object types), not raw tables:
 
 Create them from **New** → **Object Type**
 
-![step1](https://github.com/pavankumarbusetty/rocket-ship/blob/main/images/5_DataAI_S1.png)
+![step1](images/5_DataAI_S1.png)
 
 
 #### Step 2 — Choose Stable Identifiers
