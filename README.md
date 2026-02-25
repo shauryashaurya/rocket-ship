@@ -24,7 +24,7 @@
 				<li><a href="https://github.com/achaudhury7378">Abhishek Narayan Chaudhury</a>, <a href="https://www.linkedin.com/in/abhishek-chaudhury-07422b191/">LinkedIn</a></li>
 				<li><a href="https://www.linkedin.com/in/shauryashaurya/">Shaurya Agarwal</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Slow-Changing-Dimensions-in-Data-Modelling.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Slow-Changing-Dimensions-in-Data-Modelling.md">View on GitHub</a></p>
 		</td>
 	</tr>
 </table>
@@ -41,7 +41,7 @@
 				<li><a href="https://github.com/Pavi-245">Pavithra Ananthakrishnan</a>, <a href="https://www.linkedin.com/in/pavithra-ananthakrishnan-552416244/">LinkedIn</a></li>
 				<li><a href="https://github.com/sreebhavya10">Sree Bhavya Kanduri</a>, <a href="https://www.linkedin.com/in/kanduri-sree-bhavya-4001a6246">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Spark%20Declarative%20Pipeline.md#spark-declarative-pipeline-spark-411">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Spark%20Declarative%20Pipeline.md#spark-declarative-pipeline-spark-411">View on GitHub</a></p>
 		</td>
 		<td width="60%" valign="top" style="vertical-align: top !important; padding: 10px; border: 0 !important; background-color: #ffffff !important; border-color: #ffffff !important;">
 			<img src="./images/02-01-spark-declarative-pipelines.png" width="100%" style="display: block; margin: 0 !important; padding: 0 !important; border: 0 !important; outline: none !important; box-shadow: none !important;" alt="Spark Declarative Pipelines" />
@@ -64,7 +64,7 @@
 				<li><a href="https://github.com/Pavi-245">Pavithra Ananthakrishnan</a>, <a href="https://www.linkedin.com/in/pavithra-ananthakrishnan-552416244/">LinkedIn</a></li>
 				<li><a href="https://github.com/sreebhavya10">Sree Bhavya Kanduri</a>, <a href="https://www.linkedin.com/in/kanduri-sree-bhavya-4001a6246">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Spark4.1.md#apache-spark-41">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Spark4.1.md#apache-spark-41">View on GitHub</a></p>
 		</td>
 	</tr>
 </table>
@@ -80,7 +80,7 @@
 				<li><a href="https://github.com/anudeepchatradi">Anudeep Chatradi</a>, <a href="https://www.linkedin.com/in/anudeep-chatradi-78757298/">LinkedIn</a></li>
 				<li><a href="https://github.com/achaudhury7378">Abhishek Narayan Chaudhury</a>, <a href="https://www.linkedin.com/in/abhishek-chaudhury-07422b191/">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/MLOps%20in%20Foundry.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/MLOps%20in%20Foundry.md">View on GitHub</a></p>
 		</td>
 		<td width="60%" valign="top" style="vertical-align: top !important; padding: 10px; border: 0 !important; background-color: #ffffff !important; border-color: #ffffff !important;">
 			<img src="./images/03-mlops-foundry.png" width="100%" style="display: block; margin: 0 !important; padding: 0 !important; border: 0 !important; outline: none !important; box-shadow: none !important;" alt="MLOps in Palantir Foundry" />
@@ -103,7 +103,7 @@
 				<li><a href="https://github.com/vrindamakkar">Vrinda Makkar</a>, <a href="https://www.linkedin.com/in/vrinda-makkar/">LinkedIn</a></li>
 				<li><a href="https://github.com/chinmay08">Chinmay Sutar</a>, <a href="https://www.linkedin.com/in/chinmay-sutar-a40135141/">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/GenAI_in_Palantir_Foundry.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/GenAI_in_Palantir_Foundry.md">View on GitHub</a></p>
 		</td>
 	</tr>
 </table>
@@ -119,7 +119,7 @@
 				<li><a href="https://github.com/nileshsaraf56">Nilesh Saraf</a>, <a href="https://www.linkedin.com/in/nilesh-saraf-8b7aa327b/">LinkedIn</a></li>
 				<li><a href="https://github.com/achaudhury7378">Abhishek Narayan Chaudhury</a>, <a href="https://www.linkedin.com/in/abhishek-chaudhury-07422b191/">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/dspy_and_FoundryAIP.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/dspy_and_FoundryAIP.md">View on GitHub</a></p>
 		</td>
 		<td width="60%" valign="top" style="vertical-align: top !important; padding: 10px; border: 0 !important; background-color: #ffffff !important; border-color: #ffffff !important;">
 			<img src="./images/05-dspy-aip-foundry.png" width="100%" style="display: block; margin: 0 !important; padding: 0 !important; border: 0 !important; outline: none !important; box-shadow: none !important;" alt="MLOps in Palantir Foundry" />
@@ -142,7 +142,7 @@
 				<li><a href="https://github.com/Ahb98">Ankita Hatibaruah</a>, <a href="http://linkedin.com/in/ankita-hatibaruah-bb2a62218">LinkedIn</a></li>
 				<li><a href="https://github.com/pavankumarbusetty">Pavan Kumar Busetty</a>, <a href="https://www.linkedin.com/in/pavankumar-busetty/">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Palantir%20Foundry%20vs%20Traditional%20Cloud%20Data%20Platform.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/Palantir%20Foundry%20vs%20Traditional%20Cloud%20Data%20Platform.md">View on GitHub</a></p>
 		</td>
 	</tr>
 </table>
@@ -160,7 +160,7 @@
 				<li><a href="https://github.com/shrutiraj25">Shruti Raj</a>, <a href="http://linkedin.com/in/shruti-raj7">LinkedIn</a></li>
 				<li><a href="https://github.com/Jayachandran9283">Jaya Chandran</a>, <a href="https://www.linkedin.com/in/jaya-chandran-s-7ab3bab8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">LinkedIn</a></li>
 			</ol>
-			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/DataPreparationAI.md">See on GitHub</a></p>
+			<p style="margin-top: 10px;"><a href="https://github.com/shauryashaurya/rocket-ship/blob/main/DataPreparationAI.md">View on GitHub</a></p>
 		</td>
 		<td width="60%" valign="top" style="vertical-align: top !important; padding: 10px; border: 0 !important; background-color: #ffffff !important; border-color: #ffffff !important;">
 			<img src="./images/07-DataPreparationAI.png" width="100%" style="display: block; margin: 0 !important; padding: 0 !important; border: 0 !important; outline: none !important; box-shadow: none !important;" alt="Data Preparation for AI" />

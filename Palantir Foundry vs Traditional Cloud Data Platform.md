@@ -515,3 +515,8 @@ Common in:
 - Teams requiring full stack-level customization
 
 Palantir Foundry is not just a data platform — it is a data operating system that unifies pipelines, governance, lineage, ontology, and operational applications. Traditional cloud platforms can achieve similar outcomes, but typically require integrating and maintaining multiple independent tools.
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

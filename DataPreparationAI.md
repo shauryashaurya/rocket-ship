@@ -531,3 +531,8 @@ Incremental Transforms: Only process new or changed data since the last successf
  Built‑in version control, comments, and activity history ensure smooth collaboration and full traceability across teams.
 
 Palantir Foundry stands out for its unified platform, semantic data modeling , robust governance, flexible user experience, and production-grade scalability. These features enable organizations to move from raw data to operational AI solutions faster and with greater confidence than most other platforms.
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

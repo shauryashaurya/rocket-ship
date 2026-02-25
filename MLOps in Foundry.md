@@ -354,3 +354,8 @@ While tools like MLflow or Kubeflow are strong in modular or research-oriented e
 ## Authors                          
 1. [Anudeep Chatradi](https://github.com/anudeepchatradi), [LinkedIn](https://www.linkedin.com/in/anudeep-chatradi-78757298/)                          
 2. [Abhishek Narayan Chaudhury](https://github.com/achaudhury7378), [LinkedIn](https://www.linkedin.com/in/abhishek-chaudhury-07422b191/)                          
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

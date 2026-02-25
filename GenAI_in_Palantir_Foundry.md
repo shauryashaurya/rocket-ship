@@ -194,3 +194,8 @@ Cloud primitives from Azure, AWS, and GCP are powerful and mature. They are ofte
 Palantir Foundry tends to accelerate GenAI programs by: Providing a shared Ontology for live, structured business context, offering AIP Logic and Agent Studio to reduce glue code and orchestration complexity, embedding evaluation into the development lifecycle and enforcing security and governance consistently across data, models, and applications.
 
 In practice, this often translates into faster **Time-to-Market** and faster **Time-to-Value**, with teams spending more effort on solving business problems and less on stitching together infrastructure.
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

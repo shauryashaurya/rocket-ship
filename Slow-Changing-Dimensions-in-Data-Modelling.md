@@ -928,3 +928,8 @@ SELECT * FROM dim WHERE effective_end IS NOT NULL AND effective_end < effective_
 - Merge conflicts during backfill: use versioned dataset semantics and test carefully in a sandbox.
 
 ---
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

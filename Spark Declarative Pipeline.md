@@ -113,13 +113,13 @@ A pipeline project consists of:
 ```yaml
 name: reinsurance_pipeline
 definitions:
-  - glob:
-      include: transformations//.py
-  - glob:
-      include: transformations//.sql
+  - glob:
+      include: transformations//.py
+  - glob:
+      include: transformations//.sql
 database: reinsurance
 configuration:
-  spark.sql.shuffle.partitions: "1000"
+  spark.sql.shuffle.partitions: "1000"
 ```
 
 This structure resembles Foundry pipeline configuration:
@@ -315,19 +315,19 @@ def cedantbappend():
     return spark.readStream.table("cedantbclaimsst")
 ```
 ## Programming with SDP in SQL (Reinsurance Examples)
-### Creating a Materialized View (Batch) 
+### Creating a Materialized View (Batch) 
 ```sql
 CREATE MATERIALIZED VIEW policiesmv
 AS
 SELECT
-  policyid,
-  insuredname,
-  lob,
-  region,
-  effectivedate,
-  expirydate,
-  limitamount,
-  deductibleamount
+  policyid,
+  insuredname,
+  lob,
+  region,
+  effectivedate,
+  expirydate,
+  limitamount,
+  deductibleamount
 FROM reinsurancesource.policies_curated;
 ```
 
@@ -336,14 +336,14 @@ FROM reinsurancesource.policies_curated;
 CREATE TEMPORARY VIEW policytreatymaptv
 AS
 SELECT
-  p.policyid,
-  t.treatyid,
-  p.region,
-  p.lob
+  p.policyid,
+  t.treatyid,
+  p.region,
+  p.lob
 FROM policiesmv p
 JOIN treaties_mv t
-  ON p.region = t.region
-AND p.lob    = t.lob;
+  ON p.region = t.region
+AND p.lob    = t.lob;
 ```
 
 ### Creating a Streaming Table
@@ -351,13 +351,13 @@ AND p.lob    = t.lob;
 CREATE STREAMING TABLE rawclaimsst
 AS
 SELECT
-  claimid,
-  policyid,
-  eventts,
-  CAST(eventts AS DATE) AS lossdate,
-  lossamountgross,
-  region,
-  lob
+  claimid,
+  policyid,
+  eventts,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
 FROM STREAM reinsurancesource.claims_events;
 ```
 
@@ -367,30 +367,30 @@ FROM STREAM reinsurancesource.claims_events;
 CREATE MATERIALIZED VIEW claimsenrichedmv
 AS
 SELECT
-  c.claimid,
-  c.policyid,
-  m.treatyid,
-  c.lossdate,
-  c.lossamountgross,
-  c.region,
-  c.lob
+  c.claimid,
+  c.policyid,
+  m.treatyid,
+  c.lossdate,
+  c.lossamountgross,
+  c.region,
+  c.lob
 FROM rawclaimsst c
 LEFT JOIN policytreatymaptv m
-  ON c.policyid = m.policy_id
-AND c.region    = m.region
-AND c.lob       = m.lob;
+  ON c.policyid = m.policy_id
+AND c.region    = m.region
+AND c.lob       = m.lob;
 ```
 #### Treaty loss allocation (illustrative share):
 ```sql
 CREATE MATERIALIZED VIEW treatyallocationsmv
 AS
 SELECT
-  e.treatyid,
-  e.lossdate,
-  SUM(e.lossamountgross * COALESCE(t.share, 1.0)) AS treatyloss
+  e.treatyid,
+  e.lossdate,
+  SUM(e.lossamountgross * COALESCE(t.share, 1.0)) AS treatyloss
 FROM claimsenrichedmv e
 LEFT JOIN treatiesmv t
-  ON e.treatyid = t.treatyid
+  ON e.treatyid = t.treatyid
 GROUP BY e.treatyid, e.lossdate;
 ```
 #### Daily treaty loss (final analytics):
@@ -398,9 +398,9 @@ GROUP BY e.treatyid, e.lossdate;
 CREATE MATERIALIZED VIEW dailytreatylossesmv
 AS
 SELECT
-  treatyid,
-  lossdate,
-  SUM(treatyloss) AS dailytreatyloss
+  treatyid,
+  lossdate,
+  SUM(treatyloss) AS dailytreatyloss
 FROM treatyallocationsmv
 GROUP BY treatyid, lossdate;
 ```
@@ -409,28 +409,33 @@ GROUP BY treatyid, lossdate;
 ```sql
 -- Unified streaming target
 CREATE STREAMING TABLE claimsconsolidatedst;
- 
+ 
 -- Cedant A unified
 CREATE FLOW appendcedanta
 AS INSERT INTO claimsconsolidatedst
 SELECT
-  claimid,
-  policyid,
-  CAST(eventts AS DATE) AS lossdate,
-  lossamountgross,
-  region,
-  lob
+  claimid,
+  policyid,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
 FROM STREAM cedantaclaimsst;
- 
+ 
 -- Cedant B unified
 CREATE FLOW appendcedantb
 AS INSERT INTO claimsconsolidatedst
 SELECT
-  claimid,
-  policyid,
-  CAST(eventts AS DATE) AS lossdate,
-  lossamountgross,
-  region,
-  lob
+  claimid,
+  policyid,
+  CAST(eventts AS DATE) AS lossdate,
+  lossamountgross,
+  region,
+  lob
 FROM STREAM cedantbclaimsst;
 ```
+    
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            

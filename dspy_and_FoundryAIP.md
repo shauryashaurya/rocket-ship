@@ -304,3 +304,8 @@ The stock screener is simply an illustration of what structured LLM engineering 
 - Enterprise-grade governance
 
 When DSPy and Foundry AIP are leveraged together, organizations can innovate at the frontier of AI—while maintaining the discipline, security, and resilience that enterprise environments demand.
+     
+   
+---
+		   
+# [Back to Rocket Ship front page](https://shauryashaurya.github.io/rocket-ship/)            
