@@ -41,8 +41,8 @@ In Iceberg V2, row-level deletes are handled using positional delete files.
 Whenever a row is deleted or updated, Iceberg creates a separate delete file containing:
 - Data file reference
 - Row positions to delete
-Over time, these delete files keep increasing.
-During query execution, the engine must open:
+
+Over time, these delete files keep increasing. During query execution, the engine must open:
 - the data file
 - all associated delete files
 This causes slower reads and higher metadata overhead.
