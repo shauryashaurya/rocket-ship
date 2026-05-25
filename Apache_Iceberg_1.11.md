@@ -61,11 +61,21 @@ If rows at positions 1 and 3 are deleted at different times:
 - Delete file 2 → position 3
 
 Now every read must:
-- 1.	Read the data file.
-  2.	Read both delete files
-  3.	Apply deletions
-  4.	
+- Read the data file.
+- Read both delete files
+- Apply deletions
+   
 As delete operations increase, delete files accumulate and query performance degrades.
+
+## Iceberg 1.11 (V3) – Deletion Vectors
+Iceberg 1.11 introduces Deletion Vectors (DV) in the V3 specification.
+Instead of creating many positional delete files, Iceberg maintains a single deletion vector for each data file.
+Iceberg V3 has:
+- One data file
+- One Puffin file containing the deletion vector
+- 
+This creates a 1:1 mapping between:
+Data File ↔️ Deletion Vector
 
 ## Variant Data Type in Apache Iceberg 1.11
 One of the most important additions in Apache Iceberg 1.11 is support for the Variant Data Type, which improves handling of semi-structured data.
