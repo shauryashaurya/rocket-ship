@@ -172,4 +172,5 @@ Teams running GIS workloads, location analytics, ride-sharing platform analysis,
 
 ## Nanosecond Timestamps: Precision for High-Frequency Workloads
 Apache Iceberg 1.11 introduces native nanosecond timestamp support using two new V3 data types: timestamp_ns(without timezone) and timestamptz_ns (with UTC timezone). Earlier Iceberg versions only supported microsecond precision, which caused precision loss in high-frequency workloads where events occur within nanoseconds. For example, timestamps like 10:15:30.123456100 and 10:15:30.123456200 were both rounded to 10:15:30.123456, resulting in loss of exact event ordering.
+
 This enhancement is important for systems such as high-frequency trading platforms, scientific experiments, IoT sensors, and particle physics detectors, where nanosecond-level accuracy is critical. By supporting nanosecond timestamps natively, Iceberg preserves full timestamp semantics, timezone handling, and accurate event sequencing without relying on raw integer workarounds.
