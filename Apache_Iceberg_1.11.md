@@ -67,6 +67,7 @@ This architectural change provides several major benefits:
 - Stronger Multi-Engine Support
 - Future-Proof Architecture
 
+
 ## Deletion Vectors
 ### Problem in Iceberg V2
 In Iceberg V2, row-level deletes are handled using positional delete files.
@@ -145,6 +146,7 @@ Benefits of Deletion Vector:
 - Better scalability 
 - Reduced metadata overhead.
 
+
 ## Variant Data Type in Apache Iceberg 1.11
 One of the most important additions in Apache Iceberg 1.11 is support for the Variant Data Type, which improves handling of semi-structured data.
 
@@ -175,6 +177,7 @@ The Variant type stores semi-structured data in a binary encoding that is more c
 
 Schema flexibility is preserved. We don't need to define the shape of the data at table creation time. Variant accommodates evolving structures, optional fields, and nested documents.
 
+
 ## Native Geospatial Support in Apache Iceberg 1.11
 
 Apache Iceberg 1.11 introduces native support for geospatial data types such as:
@@ -201,6 +204,7 @@ CREATE TABLE locations (
 USING iceberg;
 ```
 Teams running GIS workloads, location analytics, ride-sharing platform analysis, or geofencing operations can now store spatial data in Iceberg tables without custom format extensions or string workarounds. The same Iceberg table, governed by the same Polaris catalog, accessed by the same compute engines, can hold both structured analytics data and spatial geometry data with type-aware query support.
+
 
 ## Nanosecond Timestamps: Precision for High-Frequency Workloads
 Apache Iceberg 1.11 introduces native nanosecond timestamp support using two new V3 data types: timestamp_ns(without timezone) and timestamptz_ns (with UTC timezone). Earlier Iceberg versions only supported microsecond precision, which caused precision loss in high-frequency workloads where events occur within nanoseconds. For example, timestamps like 10:15:30.123456100 and 10:15:30.123456200 were both rounded to 10:15:30.123456, resulting in loss of exact event ordering.
