@@ -1,6 +1,6 @@
 # Apache Iceberg 1.11.0: A Major Step Forward for the Open Lakehouse Ecosystem
 
-On May 19, 2026, the Apache Software Foundation officially released Apache Iceberg 1.11.0. The release introduces major architectural enhancements, new data type capabilities, better delete handling, and significant improvements for modern data lakehouse workloads.
+On May 19, 2026, Apache Iceberg officially released version 1.11.0, bringing major architectural enhancements, advanced data type support, improved delete handling, and powerful upgrades for modern data lakehouse workloads.
 
 For data engineers and organizations building scalable lakehouse platforms, this release strengthens Iceberg’s position as the leading open table format for analytics, AI, streaming, and multi-engine interoperability.
 
