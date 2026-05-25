@@ -56,6 +56,17 @@ Suppose a data file contains:
 | 2 | C |
 | 3 | D |
 
+If rows at positions 1 and 3 are deleted at different times:
+- Delete file 1 → position 1
+- Delete file 2 → position 3
+
+Now every read must:
+- 1.	Read the data file.
+  2.	Read both delete files
+  3.	Apply deletions
+  4.	
+As delete operations increase, delete files accumulate and query performance degrades.
+
 ## Variant Data Type in Apache Iceberg 1.11
 One of the most important additions in Apache Iceberg 1.11 is support for the Variant Data Type, which improves handling of semi-structured data.
 
