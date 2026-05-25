@@ -75,7 +75,7 @@ Iceberg V3 has:
 - One Puffin file containing the deletion vector
   
 This creates a 1:1 mapping between:
-Data File ↔️ Deletion Vector
+Data File <-> Deletion Vector
 
 How Deletion Vectors Work:
 Deletion vectors store deleted row positions using a Roaring Bitmap inside a Puffin file. Roaring Bitmaps efficiently store deleted row positions using:
