@@ -321,8 +321,6 @@ Additionally, Foundry may not yet support all Iceberg 1.11 features immediately 
 
 ## Using Iceberg in Foundry
 
-Apache Iceberg support in Palantir Foundry is currently evolving and, in many environments, is still available in beta version. Foundry already exposes Iceberg-based APIs such as IcebergInput, IcebergOutput, and native PyIceberg scans, indicating a strong strategic move toward open lakehouse interoperability and metadata-driven architectures.
-
 Generating a simple Iceberg table: using Polars/DuckDB
 ```bash
 import polars as pl
