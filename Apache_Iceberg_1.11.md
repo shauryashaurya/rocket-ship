@@ -216,6 +216,8 @@ This enhancement is important for systems such as high-frequency trading platfor
 
 ## Apache Iceberg in Palantir Foundry
 
+Apache Iceberg support in Palantir Foundry is currently evolving and, in many environments, is still available in beta version. Foundry already exposes Iceberg-based APIs such as IcebergInput, IcebergOutput, and native PyIceberg scans, indicating a strong strategic move toward open lakehouse interoperability and metadata-driven architectures.
+
 Generating a simple Iceberg table: using Polars/DuckDB
 ```bash
 import polars as pl
