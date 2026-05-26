@@ -103,9 +103,9 @@ Now every read must:
    
 As delete operations increase, delete files accumulate and query performance degrades.
 
-### Iceberg 1.11 (V3) – Deletion Vectors:
+### Deletion Vectors: Solving the Delete File Accumulation Problem
 Iceberg 1.11 introduces Deletion Vectors (DV) in the V3 specification.
-Instead of creating many positional delete files, Iceberg maintains a single deletion vector for each data file.
+Instead of creating many positional delete files like in V2, Iceberg maintains a single deletion vector for each data file.
 Iceberg V3 has:
 - One data file
 - One Puffin file containing the deletion vector
@@ -127,7 +127,7 @@ Example: Same data file
 | 2 | C |
 | 3 | D |
 
-Suppose, rows 1 and 3 are deleted. Conceptually the deletion vectore stores [1, 3] using a Roaring Bitmap.
+Suppose, rows 1 and 3 are deleted. Conceptually the deletion vector stores [1, 3] using a Roaring Bitmap.
 
 During query execution:
 - Iceberg reads the data file
